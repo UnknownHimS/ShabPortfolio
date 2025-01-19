@@ -401,18 +401,14 @@ p {
   line-height: 1.6;
   margin-bottom: 20px;
 }
-#containerpic{
-  background-repeat:no-repeat;
-  background-size: cover; 
-  background-image: url('/futuristicback.png');
-}
+
 .floor{
   margin-bottom:90px;
   mix-blend-mode:lighten;
   background-repeat:repeat-x;
   background-position: 60px;
   background-size: 20%; 
-  background-image: url('/floor.png');
+  background-image: url('floor.png');
   
   height:140px;
 }
