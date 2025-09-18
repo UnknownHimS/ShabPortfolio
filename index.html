@@ -99,56 +99,7 @@
         <div class="scroll-section hidden">
             <h2 class="about">Projects</h2>
             <p class="projp">Here are some of the exciting projects I’ve worked on:</p>
-            <div id="containerpic">
-                <div>
-                    <img src="squizBot.png" height="100" alt="quizBot" />
-                    <a href="https://unknownhims.github.io/quizBot">https://unknownhims.github.io/quizBot</a>
-                </div>
-                <div>
-                    <img src="sStudy.png" height="100" alt="Study" />
-                    <a href="https://unknownhims.github.io/Study">https://unknownhims.github.io/Study</a>
-                </div>
-                <div>
-                    <img src="sSellMyProduct.png" height="100" alt="SellMyProduct" />
-                    <a href="https://unknownhims.github.io/SellMyProduct">https://unknownhims.github.io/SellMyProduct</a>
-                </div>
-                <div>
-                    <img src="sClues.png" height="100" alt="Clues" />
-                    <a href="https://unknownhims.github.io/Clues">https://unknownhims.github.io/Clues</a>
-                </div>
-                <div>
-                    <img src="sPlanner.png" height="100" alt="Planner" />
-                    <a href="https://unknownhims.github.io/Planner">https://unknownhims.github.io/Planner</a>
-                </div>
-                <div>
-                    <img src="shealthtracker.png" height="100" alt="healthtracker" />
-                    <a href="https://unknownhims.github.io/healthtracker">https://unknownhims.github.io/healthtracker</a>
-                </div>
-                <div>
-                    <img src="sDetectiveTextGame.png" height="100" alt="DetectiveTextGame" />
-                    <a href="https://unknownhims.github.io/DetectiveTextGame">https://unknownhims.github.io/DetectiveTextGame</a>
-                </div>
-                <div>
-                    <img src="sTaskList.png" height="100" alt="TaskList" />
-                    <a href="https://unknownhims.github.io/TaskList">https://unknownhims.github.io/TaskList</a>
-                </div>
-                <div>
-                    <img src="sForReaders.png" height="100" alt="ForReaders" />
-                    <a href="https://unknownhims.github.io/ForReaders">https://unknownhims.github.io/ForReaders</a>
-                </div>
-                <div>
-                    <img src="sCatLover.png" height="100" alt="CatLover" />
-                    <a href="https://unknownhims.github.io/CatLover">https://unknownhims.github.io/CatLover</a>
-                </div>
-                <div>
-                    <img src="sTwoWay.png" height="100" alt="TwoWay" />
-                    <a href="https://unknownhims.github.io/TwoWay">https://unknownhims.github.io/TwoWay</a>
-                </div>
-                <div>
-                    <img src="sgroupchat.png" height="100" alt="GroupChat" />
-                    <a href="https://groupchat-rho.vercel.app/">https://groupchat-rho.vercel.app/</a>
-                </div>
-            </div>
+            <div id="containerpic"></div> <!-- emptied static project thumbnails -->
         </div>
 
         <div class="floor">
@@ -174,6 +125,54 @@
             </div>
         </div>
     </div>
+
+    <!-- New script to fetch project thumbnails automatically -->
+    <script>
+      const projects = [
+        'https://unknownhims.github.io/quizBot',
+        'https://unknownhims.github.io/Study',
+        'https://unknownhims.github.io/SellMyProduct',
+        'https://unknownhims.github.io/Clues',
+        'https://unknownhims.github.io/Planner',
+        'https://unknownhims.github.io/healthtracker',
+        'https://unknownhims.github.io/DetectiveTextGame',
+        'https://unknownhims.github.io/TaskList',
+        'https://unknownhims.github.io/ForReaders',
+        'https://unknownhims.github.io/CatLover',
+        'https://unknownhims.github.io/TwoWay',
+        'https://groupchat-rho.vercel.app/'
+      ];
+
+      const container = document.getElementById('containerpic');
+
+      projects.forEach(async (url) => {
+        try {
+          const apiUrl = `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false`;
+          const res = await fetch(apiUrl);
+          const data = await res.json();
+
+          if(data.status === 'success' && data.data.screenshot && data.data.screenshot.url) {
+            const thumbUrl = data.data.screenshot.url;
+
+            const projectEl = document.createElement('div');
+            projectEl.style.marginBottom = '15px';
+
+            projectEl.innerHTML = `
+              <a href="${url}" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; gap: 10px; text-decoration:none; color: inherit;">
+                <img src="${thumbUrl}" alt="Screenshot of project" height="100" style="border-radius: 8px; box-shadow: 0 0 6px rgba(0,255,247,0.5);" loading="lazy" />
+                <span style="word-break: break-word;">${url}</span>
+              </a>
+            `;
+
+            container.appendChild(projectEl);
+          } else {
+            console.warn(`No screenshot found for ${url}`);
+          }
+        } catch (err) {
+          console.error(`Failed to fetch thumbnail for ${url}`, err);
+        }
+      });
+    </script>
 
     <script src="script.js"></script>
 </body>
