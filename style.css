@@ -131,7 +131,7 @@ li {
   color: #61dafb;
   text-align: center;
   word-break: break-word;
-  max-width: 100%;
+  max-width: 50%;
   display: block;
 }
 
@@ -429,5 +429,6 @@ p {
   transform: translateY(90px);
   transition: opacity 1s ease, transform 2s ease;
 }
+
 
 
